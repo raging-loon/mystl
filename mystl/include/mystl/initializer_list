@@ -1,0 +1,53 @@
+#ifndef MYSTL_INITIALIZER_LIST_
+#define MYSTL_INITIALIZER_LIST_
+
+// shamelessly stolen from the real initializer_list
+// STLs implementation is already perfect
+
+namespace mystl
+{
+
+template<typename _Elem>
+class initializer_list
+{
+public:
+
+    constexpr initializer_list(_Elem* first, _Elem* last) noexcept : _first(first), _last(last) {}
+    constexpr initializer_list() noexcept : _first(nullptr), _last(nullptr) {}
+
+    constexpr const _Elem* begin() const noexcept {
+        return _first;
+    }
+
+    constexpr const _Elem* end() const noexcept {
+        return _last;
+    }
+
+
+    constexpr size_t size() const noexcept {
+        return _last - _first;
+    }
+
+
+private:
+    const _Elem* _first;
+    const _Elem* _last;
+};
+
+template<typename _Elem>
+constexpr const _Elem* begin(mystl::initializer_list<_Elem> _list) noexcept
+{
+    return _list.begin();
+}
+
+template<typename _Elem>
+constexpr const _Elem* end(mystl::initializer_list<_Elem> _list) noexcept
+{
+    return _list.end();
+}
+
+
+}
+
+
+#endif // MYSTL_INITIALIZER_LIST_

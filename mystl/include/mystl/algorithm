@@ -1,0 +1,86 @@
+#ifndef _MYSTL_ALGORITHM_
+#define _MYSTL_ALGORITHM_
+
+namespace mystl
+{
+
+// return the number of memory addresses _Elem uses
+template<typename _Elem>
+constexpr unsigned int get_memory_size()
+{
+#if defined(__x86_64__) || defined(_WIN64) 
+    if(sizeof(_Elem) > 8)  return sizeof(_Elem) / 8;
+#else if defined(_WIN32) || defined(__i386__)
+    if(sizeof(_Elem) > 4) return sizeof(_Elem) / 4;
+#endif
+    return 1;
+}
+
+
+template<typename _T1, typename _T2>
+_T2* copy(_T1* first, _T1* last, _T2* out)
+{
+    for(; first != last; ++first, ++out)
+    {
+        *out = *first;
+    }
+
+    return out;
+}
+
+template<typename _Elem>
+inline int _int_stalin_sort(_Elem* start, _Elem* end)
+{
+    _Elem* p = start;
+    
+    while(p < end)
+    {
+        // is this element out of order?
+        if((p + 1) < end && ( *p > *(p + 1)))
+        {
+            // shift everything to the left and overwrite it
+            for( _Elem* index = p; index < end; index++)
+                *(index) = *(index + 1);
+            end -= 1;
+        }          
+        p++;
+    }
+    return end-start;
+}
+
+
+template<typename _Elem>
+inline int stalin_sort(_Elem* start, _Elem* end)
+{
+    int arr_size = 0;
+    bool sorted = false;
+
+    while(!sorted)
+    {
+        sorted = true;
+        // check to see if any elements are out of order
+        for( _Elem* p = start ; p < end; p++)
+        {
+            if((p + 1) < end && *p > *(p + 1))
+            {
+                // initiate the great purge
+                arr_size = _int_stalin_sort<_Elem>(start, end);
+
+                end = start + arr_size;
+                
+                sorted = false;
+                break;
+            }
+        }
+
+    }
+    return end-start;
+
+}
+
+
+
+}
+
+
+#endif // _MYSTL_ALGORITHM_

@@ -1,0 +1,18 @@
+#ifndef _MYSTL_VECTOR_
+#define _MYSTL_VECTOR_
+
+namespace mystl
+{
+
+template<typename _Elem>
+class vector
+{
+    using value_type = _Elem;
+    
+
+
+};
+
+}
+
+#endif // _MYSTL_VECTOR_

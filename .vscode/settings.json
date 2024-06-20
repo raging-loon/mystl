@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "sort": "cpp",
+        "algorithm": "cpp",
+        "initializer_list": "cpp",
+        "xutility": "cpp",
+        "vector": "cpp"
+    }
+}

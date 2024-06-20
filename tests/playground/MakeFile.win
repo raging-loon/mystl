@@ -1,0 +1,7 @@
+CC=cl.exe
+CFLAGS=/Wall
+
+all: playground
+
+playground:
+	$(CC) /I "../../mystl/include" $(CFLAGS) main.cpp /oplayground.exe

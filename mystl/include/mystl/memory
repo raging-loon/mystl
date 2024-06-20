@@ -1,0 +1,50 @@
+#ifndef MYSTL_MEMORY_
+#define MYSTL_MEMORY_
+
+#include <mystl/algorithm>
+
+namespace mystl
+{
+
+template<typename _Elem>
+class allocator
+{
+public:
+    using value_type = _Elem;
+    using pointer = _Elem*;
+    using size_t = unsigned long long;
+    constexpr allocator() noexcept : m_heap(nullptr), m_size(0) {}
+     ~allocator() noexcept {
+        if(m_heap)
+            delete[] m_heap;
+    }
+
+    constexpr pointer allocate(size_t n)
+    {
+        if(!m_heap)
+        {
+            m_heap = new _Elem[n];
+            m_size = n;
+        }
+        else
+        {
+            _Elem* newHeap = new _Elem[n];
+            mystl::copy(m_heap, m_heap + m_size, newHeap);
+            delete[] m_heap;
+            m_heap = newHeap;
+
+        }
+        return m_heap;
+    }
+
+
+
+private:
+    _Elem* m_heap;
+    size_t m_size;
+};
+
+}
+
+
+#endif // MYSTL_MEMORY_
